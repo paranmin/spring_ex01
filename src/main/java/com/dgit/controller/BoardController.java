@@ -56,7 +56,7 @@ public class BoardController {
 		logger.info("board read Get...");
 		logger.info("bno : " + bno);
 
-		service.upViewCount(bno);
+		service.upViewCount(bno, 1);
 		BoardVO vo = service.read(bno);
 		model.addAttribute("boardVO", vo);
 		model.addAttribute("title", "Read");
@@ -114,7 +114,7 @@ public class BoardController {
 		logger.info("bno : " + bno);
 		logger.info("criteria : " + criteria);
 
-		service.upViewCount(bno);
+		service.upViewCount(bno, 1);
 		BoardVO vo = service.read(bno);
 		model.addAttribute("boardVO", vo);
 		model.addAttribute("title", "Read");

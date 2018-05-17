@@ -16,8 +16,8 @@
 		update tbl_board set title = #{title}, content = #{content}, writer = #{writer} where bno = #{bno}
 	</update>
 
-	<update id="updateViewCnt" parameterType="int">
-		update tbl_board set viewcnt = viewcnt+1 where bno = #{bno}
+	<update id="updateViewCnt" parameterType="Map">
+		update tbl_board set viewcnt = viewcnt+#{amount} where bno = #{bno}
 	</update>
 
 	<delete id="delete" parameterType="int">
@@ -31,8 +31,53 @@
 	<select id="listCriteria" parameterType="Criteria" resultType="BoardVO">
 		select * from tbl_board order by bno desc limit #{pageStart}, #{perPageNum}
 	</select>
-	
+
 	<select id="countTotal" resultType="int">
 		select count(bno) from tbl_board
 	</select>
+
+	<sql id="sqlBySearch">
+		<where>
+			<choose>
+				<when test="searchType == 't'.toString()">
+					title like CONCAT('%', #{keyword},'%')
+				</when>
+				<when test="searchType == 'c'.toString()">
+					content like CONCAT('%', #{keyword},'%')
+				</when>
+				<when test="searchType == 'w'.toString()">
+					title like CONCAT('%', #{keyword},'%')
+				</when>
+				<when test="searchType == 'tc'.toString()">
+					title like CONCAT('%', #{keyword},'%') or 
+					content like CONCAT('%', #{keyword},'%')
+				</when>
+				<when test="searchType == 'cw'.toString()">
+					content like CONCAT('%', #{keyword},'%') or
+					writer like CONCAT('%', #{keyword},'%')
+				</when>
+				<when test="searchType == 'tcw'.toString()">
+					title like CONCAT('%', #{keyword},'%') or
+					writer like CONCAT('%', #{keyword},'%') or
+					content like CONCAT('%', #{keyword},'%')
+				</when>
+			</choose>
+		</where>
+	</sql>
+
+	<select id="listSearch" parameterType="Criteria" resultType="BoardVO">
+		select * from tbl_board 
+		<include refid="sqlBySearch" />
+		order by bno desc limit #{pageStart}, #{perPageNum}
+	</select>
+
+	<select id="countTotalBySearch" parameterType="Criteria" resultType="int">
+		select count(bno) from tbl_board
+		<include refid="sqlBySearch" />
+	</select>
+	
+	<update id="updateReplyCnt" parameterType="Map">
+		update tbl_board set replycnt = replycnt + #{amount}
+		where bno = #{bno}
+	</update>
 </mapper>

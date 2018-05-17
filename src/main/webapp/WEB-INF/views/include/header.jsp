@@ -25,11 +25,8 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
+    <script src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.min.js"></script>
   </head>
-      <!-- jQuery 2.1.4 -->
-    <script src="${pageContext.request.contextPath }/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-    
   <body class="skin-blue sidebar-mini">
     <div class="wrapper">
       
@@ -338,7 +335,7 @@
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#">Forms</a></li>
-            <li class="active">General Elements</li>
+            <li><a href="#">board</a></li>
+            <li class="active">${title }</li>
           </ol>
         </section>

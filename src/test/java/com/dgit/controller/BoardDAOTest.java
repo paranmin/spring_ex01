@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.dgit.dao.BoardDAO;
 import com.dgit.domain.BoardVO;
 import com.dgit.domain.Criteria;
+import com.dgit.domain.SearchCriteria;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/**/*.xml" })
@@ -34,7 +35,6 @@ public class BoardDAOTest {
 		assertEquals(1, res);
 	}
 
-	@Test
 	public void test2Read() throws Exception {
 		BoardVO vo = dao.read(3);
 		assertNotNull(vo);
@@ -42,7 +42,6 @@ public class BoardDAOTest {
 		System.out.println(vo);
 	}
 
-	@Test
 	public void test3Update() throws Exception {
 		BoardVO vo = new BoardVO();
 		vo.setBno(3);
@@ -60,7 +59,6 @@ public class BoardDAOTest {
 		assertEquals(1, res);
 	}
 
-	@Test
 	public void test5ListAll() throws Exception {
 		List<BoardVO> list = dao.listAll();
 		assertNotNull(list);
@@ -70,11 +68,26 @@ public class BoardDAOTest {
 		}
 	}
 
-	@Test
 	public void test6ListCriteria() throws Exception {
 		Criteria criteria = new Criteria();
 		criteria.setPage(3);
 
 		dao.listCriteria(criteria);
+	}
+	
+	@Test
+	public void test7ListBySearch() throws Exception {
+		SearchCriteria criteria = new SearchCriteria();
+		criteria.setPage(1);
+		criteria.setSearchType("t");
+		criteria.setKeyword("처처첫");
+		
+		int res = dao.countTotalBySearch(criteria);
+		System.out.println(res);
+		
+		List<BoardVO> list = dao.listSearch(criteria);
+		for (BoardVO vo : list) {
+			System.out.println(vo);
+		}
 	}
 }

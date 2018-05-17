@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.dgit.domain.BoardVO;
 import com.dgit.domain.Criteria;
+import com.dgit.domain.SearchCriteria;
 
 public interface BoardDAO {
 	int create(BoardVO vo) throws Exception;
@@ -12,7 +13,7 @@ public interface BoardDAO {
 
 	int update(BoardVO vo) throws Exception;
 
-	int updateViewCnt(int bno) throws Exception;
+	int updateViewCnt(int bno, int amount) throws Exception;
 
 	int delete(int bno) throws Exception;
 
@@ -21,4 +22,10 @@ public interface BoardDAO {
 	List<BoardVO> listCriteria(Criteria criteria) throws Exception;
 
 	int countTotal() throws Exception;
+
+	List<BoardVO> listSearch(SearchCriteria criteria) throws Exception;
+
+	int countTotalBySearch(SearchCriteria criteria) throws Exception;
+
+	int updateReplyCnt(int bno, int amount) throws Exception;
 }

@@ -1,6 +1,8 @@
 package com.dgit.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.dgit.domain.BoardVO;
 import com.dgit.domain.Criteria;
+import com.dgit.domain.SearchCriteria;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -32,8 +35,11 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public int updateViewCnt(int bno) throws Exception {
-		return session.update(namespace + "updateViewCnt", bno);
+	public int updateViewCnt(int bno, int amount) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("bno", bno);
+		map.put("amount", amount);
+		return session.update(namespace + "updateViewCnt", map);
 	}
 
 	@Override
@@ -54,6 +60,24 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public int countTotal() throws Exception {
 		return session.selectOne(namespace + "countTotal");
+	}
+
+	@Override
+	public List<BoardVO> listSearch(SearchCriteria criteria) throws Exception {
+		return session.selectList(namespace + "listSearch", criteria);
+	}
+
+	@Override
+	public int countTotalBySearch(SearchCriteria criteria) throws Exception {
+		return session.selectOne(namespace + "countTotalBySearch", criteria);
+	}
+
+	@Override
+	public int updateReplyCnt(int bno, int amount) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("bno", bno);
+		map.put("amount", amount);
+		return session.update(namespace + "updateReplyCnt", map);
 	}
 
 }

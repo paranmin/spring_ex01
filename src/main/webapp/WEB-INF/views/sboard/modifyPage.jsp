@@ -13,6 +13,8 @@
 					<form action="modifyPage" role="form" method="post">
 						<input type="hidden" name="bno" value="${boardVO.bno }" />
 						<input type="hidden" name="page" value="${criteria.page }" />
+						<input type="hidden" name="searchType" value="${criteria.searchType }" />
+						<input type="hidden" name="keyword" value="${criteria.keyword }" />
 						<div class="form-group">
 							<label for="writer">Writer</label>
 							<input type="text" name="writer" id="writer"  class="form-control" value="${boardVO.writer }" />
@@ -39,8 +41,11 @@
 <script>
 $(function() {
 	$("#btnGoList").on("click", function() {
-		var page = $("input[name='page']").val();
-		location.href = "${pageContext.request.contextPath}/sboard/listPage?page="+page;
+		var page = $("input[name='page']").val(),
+			searchType = $("input[name='searchType']").val(),
+			keyword = $("input[name='keyword']").val();
+
+		location.href = "${pageContext.request.contextPath}/sboard/listPage?page="+page+"&searchType="+searchType+"&keyword="+keyword;
 		return false;
 	});
 });

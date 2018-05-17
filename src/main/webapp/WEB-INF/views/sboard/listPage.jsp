@@ -42,7 +42,7 @@
 						<c:forEach var="item" items="${list}">
 							<tr>
 								<td class="text-center">${item.bno }</td>
-								<td><a href="readPage?bno=${item.bno}&page=${pageMaker.criteria.page}">${item.title }</a></td>
+								<td><a href="readPage?bno=${item.bno}&page=${pageMaker.criteria.page}&searchType=${criteria.searchType}&keyword=${criteria.keyword}">${item.title }</a> [${item.replycnt}]</td>
 								<td class="text-center">${item.writer }</td>
 								<td class="text-center"><fmt:formatDate value="${item.regdate}" pattern="yyyy-MM-dd HH:mm"/></td>
 								<td class="text-center">${item.viewcnt }</td>
@@ -58,7 +58,7 @@
 						<ul class="pagination justify-content-center">
 							<c:if test="${pageMaker.prev }">
 								<li class="page-item">
-									<a class="page-link" href="listPage?page=${pageMaker.startPage-1}" aria-label="Previous">
+									<a class="page-link" href="listPage?page=${pageMaker.startPage-1}&searchType=${pageMaker.criteria.searchType}&keyword=${pageMaker.criteria.keyword}" aria-label="Previous">
 										<span aria-hidden="true">&laquo;</span>
 										<span class="sr-only">Prev</span>
 									</a>
@@ -66,11 +66,11 @@
 							</c:if>
 							
 							<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-								<li class="page-item${pageMaker.criteria.page == idx ? ' active': '' }"><a class="page-link" href="listPage?page=${idx}">${idx}</a></li>
+								<li class="page-item${pageMaker.criteria.page == idx ? ' active': '' }"><a class="page-link" href="listPage?page=${idx}&searchType=${criteria.searchType}&keyword=${criteria.keyword}">${idx}</a></li>
 							</c:forEach>
 							<c:if test="${pageMaker.next }">
 								<li class="page-item">
-									<a class="page-link" href="listPage?page=${pageMaker.endPage+1}" aria-label="Next">
+									<a class="page-link" href="listPage?page=${pageMaker.endPage+1}&searchType=${pageMaker.criteria.searchType}&keyword=${pageMaker.criteria.keyword}" aria-label="Next">
 										<span aria-hidden="true">&raquo;</span>
 										<span class="sr-only">Next</span>
 									</a>

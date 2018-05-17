@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dgit.dao.BoardDAO;
 import com.dgit.domain.BoardVO;
 import com.dgit.domain.Criteria;
+import com.dgit.domain.SearchCriteria;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -29,14 +31,16 @@ public class BoardServiceImpl implements BoardService {
 		return dao.listAll();
 	}
 
+	@Transactional
 	@Override
 	public void modify(BoardVO vo) throws Exception {
 		dao.update(vo);
+		dao.updateViewCnt(vo.getBno(), -1);
 	}
 
 	@Override
-	public void upViewCount(int bno) throws Exception {
-		dao.updateViewCnt(bno);
+	public void upViewCount(int bno, int amount) throws Exception {
+		dao.updateViewCnt(bno, amount);
 	}
 
 	@Override
@@ -52,6 +56,16 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int countTotal() throws Exception {
 		return dao.countTotal();
+	}
+
+	@Override
+	public List<BoardVO> listCriteriaBySearch(SearchCriteria criteria) throws Exception {
+		return dao.listSearch(criteria);
+	}
+
+	@Override
+	public int countTotalBySearch(SearchCriteria criteria) throws Exception {
+		return dao.countTotalBySearch(criteria);
 	}
 
 }
